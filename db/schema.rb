@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_31_151913) do
+ActiveRecord::Schema[7.1].define(version: 2025_08_06_151608) do
   create_table "api_keys", force: :cascade do |t|
     t.integer "bearer_id", null: false
     t.string "bearer_type", null: false
@@ -19,6 +19,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_31_151913) do
     t.datetime "updated_at", null: false
     t.index ["bearer_id", "bearer_type"], name: "index_api_keys_on_bearer_id_and_bearer_type"
     t.index ["token"], name: "index_api_keys_on_token", unique: true
+  end
+
+  create_table "device_assignment_histories", force: :cascade do |t|
+    t.integer "device_id", null: false
+    t.integer "user_id", null: false
+    t.integer "status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["device_id"], name: "index_device_assignment_histories_on_device_id"
+    t.index ["user_id"], name: "index_device_assignment_histories_on_user_id"
   end
 
   create_table "devices", force: :cascade do |t|
@@ -35,4 +45,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_31_151913) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "device_assignment_histories", "devices"
+  add_foreign_key "device_assignment_histories", "users"
 end
