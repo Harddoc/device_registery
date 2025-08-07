@@ -12,12 +12,12 @@ class AssignDeviceToUser
 
     # Check if device is assigned to someone else
     if device.assigned? && device.owner != @user
-      raise StandardError.new("Device is already assigned to another user")
+      raise AssigningError::AlreadyUsedOnOtherUser, "Device is already assigned to another user"
     end
 
     # Check if user returned this device before
     if DeviceAssignmentHistory.where(device: device, user: @user, status: :returned).exists?
-      raise StandardError.new("You cannot re-assign a device you previously returned")
+      raise AssigningError::AlreadyUsedOnUser, "You cannot re-assign a device you previously returned"
     end
 
     # Assign device

@@ -8,11 +8,11 @@ class ReturnDeviceFromUser
 
   def call
     device = Device.find_by(serial_number: @serial_number)
-    raise ActiveRecord::RecordNotFound, "Device not found" unless device
+    raise ReturnError::NotFound, "Device not found" unless device
 
     # Make sure device is assigned to this user
     if device.owner != @user
-      raise StandardError, "You can only return a device you own"
+      raise ReturnError::Unauthorized, "You can only return a device you own"
     end
 
     ActiveRecord::Base.transaction do
