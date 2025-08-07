@@ -1,24 +1,74 @@
-# README
+# Device Registry
 
-Your task is to implement the part of the application that helps track devices assigned to users within an organization.
+Thank you for taking the time to review my code!
 
-For now, we have two ActiveRecord models: User and Device.
-User can have many devices; the device should be active only for one assigned user.
-There are 2 actions a User can take with the Device: assign the device to User or return the Device.
+This is a simple device registration system built with Ruby on Rails. It allows users to register devices and return them and ensures proper ownership tracking through assignment history.
 
-Here are the product requirements:
-- User can assign the device only to themself. 
-- User can't assign the device already assigned to another user.
-- Only the user who assigned the device can return it. 
-- If the user returned the device in the past, they can't ever re-assign the same device to themself.
+---
 
+## Getting Started
 
-TODO:
- - Clone this repo to your local machine - DON'T FORK IT.
- - Fix the config, so you can run the test suite properly.
- - Implement the code to make the tests pass for `AssignDeviceToUser` service.
- - Following the product requirements listed above, implement tests for returning the device and then implement the code to make them pass.
- - In case you are missing additional product requirements, use your best judgment. Have fun with it.
- - Refactor at will. Do you see something you don't like? Change it. It's your code. Remember to satisfy the outlined product requirements though.
- - Remember to document your progress using granular commits and meaningful commit messages.
- - Publish your code as a public repo using your Github account.
+To run this project locally, Docker is highly recommended for simplicity and consistency across environments.
+
+### Prerequisites
+
+- [Docker](https://www.docker.com/) installed on your system.
+
+---
+
+##  Setup Instructions
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/Harddoc/device_registery.git
+   cd device_registery
+    ```
+
+2. **Build the Docker image**
+
+   ```bash
+   docker build -t device-registry .
+   ```
+
+  ### !!! important: 
+  If running a Windows machine aditional command may be required!!!
+
+  It will convert the files to use Unix-style line endings.
+   ```bash
+   dos2unix bin/*
+   ```
+3. **Run the Docker container**
+
+   ```bash
+   docker run -d -p 3000:3000 device-registry
+   ```
+4. **Check running containers**
+
+   ```bash
+   docker ps
+   ```
+   Note the container name, e.g., `elegant_morse`.
+5. **Run the Docker container**
+
+   ```bash
+   docker exec -it elegant_morse sh
+   ```
+## Running Tests
+Inside the container shell, run the following command:
+
+   ```bash
+   bundle exec rspec
+   ```
+## Notes
+Custom errors are defined under `lib/errors/` and registered in `application.rb`.
+
+The migrations should be taken care of by Docker.
+
+By default, this setup is test-ready. To run in production mode, additional configuration may be required. See dockerfile!
+
+## Author
+@Harddoc
+
+Thank you for the opportunity!
+
